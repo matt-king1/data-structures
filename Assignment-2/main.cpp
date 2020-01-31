@@ -76,8 +76,7 @@ void printNext10(wordItem uniqueWords[], int N, int totalNumWords)
 }
 
 int main(int argc, char* argv[])
-{
-    
+{  
     if(argc != 4) 
     {
         cout << "Usage: Assignment2Solution <number of words> <inputfilename.txt> <ignoreWordsfilename.txt>" << endl;
