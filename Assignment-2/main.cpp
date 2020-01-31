@@ -71,7 +71,7 @@ void printNext10(wordItem uniqueWords[], int N, int totalNumWords)
 {
     for(int i = N; i < N+10; i++)
     {
-
+        std::cout << fixed << setprecision(4) << (float)uniqueWords[i].count/(float)totalNumWords << " - " << uniqueWords[i].word << endl;
     }
 }
 
