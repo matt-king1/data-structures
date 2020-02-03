@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <iomanip>
 
 using namespace std;
 
@@ -79,7 +80,7 @@ wordItem* resize(wordItem* arrayPtr, int &capacity)
 {
 	//increase the capacity by two times
 	int newCapacity = 2 * capacity;
-    cout<<"Resizing from "<<capacity<<" to "<<newCapacity<<endl;
+    //zcout<<"Resizing from "<<capacity<<" to "<<newCapacity<<endl;
 
 	//dynamically allocate an array of size newCapacity
 	wordItem *newArray = new wordItem[newCapacity];
@@ -138,39 +139,45 @@ int main(int argc, char* argv[])
     {
         if(index == capacity-1)
         {
-            resize(uniqueWords, capacity);
+            uniqueWords = resize(uniqueWords, capacity);
             timesResized++;
         }
 
-        cout << word << ": " << isStopWord(word, ignoreWords) << " " << isInUniqueWordsArr(word, uniqueWords, index) << endl;
+        //cout << word << ": " << isStopWord(word, ignoreWords) << " " << isInUniqueWordsArr(word, uniqueWords, index) << endl;
 
         if(!isStopWord(word, ignoreWords) && !isInUniqueWordsArr(word, uniqueWords, index))
         {
-            cout << "Creating WI and adding to array at index: " << index << endl;
-            wordItem wi = {word, 1};
+            //cout << "Creating WI and adding to array at index: " << index << endl;
+            wordItem wi;
+            wi.word = word;
+            wi.count = 1;
+
             uniqueWords[index] = wi;
             index++;
-            cout << "done" << endl;
+            //cout << "done" << endl;
         } else if (!isStopWord(word, ignoreWords))
         {
-            cout << "Looking for WI in array" << endl;
+            //cout << "Looking for WI in array" << endl;
             for(int i = 0; i < index; i++)
             {
                 if(uniqueWords[i].word == word)
                 {
-                    cout << "Found word, incrementing count" << endl;
-                    uniqueWords[i].count++;
-                    //break;
+                    //cout << "Found word " << uniqueWords[i].word << ", incrementing count to: " << uniqueWords[i].count + 1 << endl;
+                    uniqueWords[i].count += 1;
+                    break;
                 }
             }
         }
     }
-    cout << "DONE" << " " << index << endl;
+    cout << "Array doubled: "<< timesResized << "\n#\n";
+    cout << "Unique non-common words: " << index << "\n#\n";
+    cout << "Total non-common words: " << getTotalNumberNonStopWords(uniqueWords, index) << "\n#\n";
+    cout << "Probability of next 10 words from rank " << N << "\n---------------------------------------\n";
 
-    for(int i = 0; i < index; i++)
-    {
-        cout << i << " " << uniqueWords[i].word << ": " << uniqueWords[i].count;
-    }
+    arraySort(uniqueWords, index);
+    
+    int numNonStopWords = getTotalNumberNonStopWords(uniqueWords, index);
+    printNext10(uniqueWords, N, numNonStopWords);
 
     textFileIFS.close(); // close the file
 }
