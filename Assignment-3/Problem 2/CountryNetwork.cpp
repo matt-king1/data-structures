@@ -7,6 +7,8 @@
 /****************************************************************/
 
 #include "CountryNetwork.hpp"
+#include <string>
+#include <iostream>
 
 using namespace std;
 
@@ -17,8 +19,7 @@ using namespace std;
  */
 CountryNetwork::CountryNetwork()
 {
-    // TODO
-
+    head = nullptr;
 }
 
 
@@ -31,8 +32,19 @@ CountryNetwork::CountryNetwork()
  */
 void CountryNetwork::insertCountry(Country* previous, string countryName)
 {
-    // TODO
-
+    if(previous == NULL)
+    {
+        cout << "adding: " << countryName << " (HEAD)" << endl;
+        Country *tmp = new Country{countryName};
+        tmp->next = head;
+        head = tmp;
+    } else
+    {
+        cout << "adding: " << countryName << " (prev: " << previous->name << ")" << endl;
+        Country *tmp = new Country{countryName};
+        tmp->next = previous->next;
+        previous->next = tmp;
+    }
 }
 
 /*
@@ -40,10 +52,32 @@ void CountryNetwork::insertCountry(Country* previous, string countryName)
  * @param none
  * @return none
  */
-void CountryNetwork::loadDefaultSetup()
-{
-    // TODO
+void CountryNetwork::loadDefaultSetup() {
+    string names[] = {"United States", "Canada", "Brazil", "India", "China", "Australia"};
+    
+    Country *a = new Country{names[0]};
+    cout<<"adding: "<<a->name<<" (HEAD)"<<endl;
+    head = a;
 
+    Country *b = new Country{names[1]};
+    cout << "adding: " << b->name << " (prev: " << a->name << ")" << endl;
+    head->next = b;
+
+    Country *c = new Country{names[2]};
+    cout << "adding: " << c->name << " (prev: " << b->name << ")" << endl;
+    head->next->next = c;
+
+    Country *d = new Country{names[3]};
+    cout << "adding: " << d->name << " (prev: " << c->name << ")" << endl;
+    head->next->next->next = d;
+
+    Country *e = new Country{names[4]};
+    cout << "adding: " << e->name << " (prev: " << d->name << ")" << endl;
+    head->next->next->next->next = e;
+
+    Country *f = new Country{names[5]};
+    cout << "adding: " << f->name << " (prev: " << e->name << ")" << endl;
+    head->next->next->next->next->next = f;
 }
 
 /*
@@ -51,10 +85,20 @@ void CountryNetwork::loadDefaultSetup()
  * @param countryName name of the country to look for in network
  * @return pointer to node of countryName, or NULL if not found
  */
-Country* CountryNetwork::searchNetwork(string countryName)
+Country* CountryNetwork::searchNetwork(string countryName) 
 {
-    // TODO
-
+    Country *c = head;
+    
+    if (c == NULL) { return NULL; }
+    
+    do
+    {
+        if(c->name == countryName)
+        {
+            return c;
+        }
+        c = c->next;
+    } while(c->next != NULL);
 }
 
 /*
@@ -67,8 +111,26 @@ Country* CountryNetwork::searchNetwork(string countryName)
  */
 void CountryNetwork::transmitMsg(string receiver, string message)
 {
-    // TODO
+    Country *c = head;
+    
+    
+    do
+    {
+        if(c->name == receiver)
+        {
+            c->numberMessages++;
+            c->message = message;
+            cout << c->name << " [# messages received: " << c->numberMessages << "] received: " << c->message << endl;
+            break;
+        } else if (c->name != receiver)
+        {
+            c->numberMessages++;
+            c->message = message;
+            cout << c->name << " [# messages received: " << c->numberMessages << "] received: " << c->message << endl;
 
+        }
+        c = c->next;
+    } while(c->next != NULL);
 }
 
 /*
@@ -77,6 +139,27 @@ void CountryNetwork::transmitMsg(string receiver, string message)
  */
 void CountryNetwork::printPath()
 {
-    // TODO
-    
+    cout << "== CURRENT PATH ==\n";
+    if (head == nullptr)
+    {
+        cout << "nothing in path" << endl;
+    }
+    else
+    {
+        Country *c = head;
+
+        do
+        {
+            if (c->next == nullptr)
+            {
+                cout << c->name << endl;
+            } else
+            {
+                cout << c->name << " -> ";
+                c = c->next;
+            }
+        } while (c->next != NULL);
+        cout << "NULL\n";
+    }
+    cout << "===\n";
 }
