@@ -32,11 +32,11 @@ void QueueLL::enqueue(int key)
 
     if(isEmpty())
     {
-        queueFront = nn;
-        queueEnd = nn;
+        // queueFront = nn; linter error
+        // queueEnd = nn;
     } else {
-        queueEnd->next = nn;
-        queueEnd = nn;
+        // queueEnd->next = nn; linter error
+        // queueEnd = nn;
     }
 }
 
@@ -51,9 +51,9 @@ void QueueLL::dequeue()
             queueFront = nullptr;
             queueEnd = nullptr;
         } else {
-            Node* tmp = queueFront;
+            //Node* tmp = queueFront; Linter error
             queueFront = queueFront->next;
-            delete tmp;
+            //delete tmp;
         }
     } else {
         cout<<"queue is empty. can not deque"<<endl;
