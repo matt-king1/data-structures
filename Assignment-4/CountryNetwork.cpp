@@ -78,7 +78,34 @@ void CountryNetwork::insertCountry(Country* previous, string countryName) {
  * @return none
  */
 void CountryNetwork::deleteCountry(string countryName) {
-    //TODO: Complete this function
+    Country* prev = head;
+
+    if(prev->name == countryName){
+        // found country at head
+        // rewiring and deleting
+        Country *tmp = head;
+        head = head->next;
+        delete tmp;
+    } else {
+        Country *curr = head->next; // to hold current node pointer
+
+        // traverse until current->data == key
+        while(curr && curr->name != countryName)
+        {
+            prev = prev->next;
+            curr = curr->next;
+        }
+
+        // check if curr is not NULL
+        if(!curr)
+        {
+            cout << "Country does not exist." << endl;
+        } else {
+            // rewiring and deleting
+            prev->next = curr->next;
+            delete curr;
+        }
+    }
 }
 
 /*
@@ -137,6 +164,30 @@ Country* CountryNetwork::createLoop(string countryName)
 void CountryNetwork::deleteEntireNetwork()
 {
     //TODO: Complete this function
+
+    if(!head) { return; }
+
+    // setup pointers
+    Country *prev = head;
+    Country *curr = head->next;
+
+    // traverse and delete 
+    while(curr != NULL)
+    {
+        cout << "deleting: " << prev->name << endl;
+        delete prev;
+        prev = curr;
+        curr = curr->next;
+    }
+
+    // delete last node
+    cout << "deleting: " << prev->name << endl;
+    delete prev;
+
+    // rewire head node
+    head = nullptr;
+
+    cout << "Deleted network" << endl;
 }
 
 /*
