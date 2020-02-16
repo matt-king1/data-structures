@@ -205,7 +205,7 @@ void CountryNetwork::deleteEntireNetwork()
 * returns true if loop is detected. Otherwise return false.
 */
 bool CountryNetwork::detectLoop() {
-    
+
     // using Floyd's Cycle Detection Algorithm
     // https://en.wikipedia.org/wiki/Cycle_detection#Floyd's_Tortoise_and_Hare
     // https://www.youtube.com/watch?v=MFOAbpfrJ8g
@@ -225,6 +225,37 @@ bool CountryNetwork::detectLoop() {
 }
 
 /*
+* Purpose: Locate and return a node at a specific index
+*@param: index
+*@param: head
+* returns Country* at index if found; otherwise, return nullptr
+*/
+Country* getNodeAtIndex(int index, Country* &head)
+{
+    int i = 0;
+
+    if (!head) { return nullptr; }
+
+    Country* curr = head;
+    while(curr->next != nullptr)
+    {
+        if(i == index)
+        {
+            return curr;
+        }
+        curr = curr->next;
+        i++;
+    }
+
+    if(i == index) // check last node
+    {
+        return curr;
+    }
+
+    return nullptr;
+}
+
+/*
 * Purpose: Take the chunk of nodes from start index to end index
 *          Move that chunk at the end of the List
 *@param: start index
@@ -234,6 +265,71 @@ bool CountryNetwork::detectLoop() {
 void CountryNetwork:: readjustNetwork(int start_index, int end_index)
 {
     //TODO: Complete this function
+    //cout << "start index: " << start_index << endl << "end index: " << end_index << endl;
+
+    if(!head)
+    {
+        cout << "Linked List is Empty" << endl;
+        return;
+    }
+
+    if (start_index > end_index)
+    {
+        cout << "Invalid indices" << endl;
+        return;
+    }
+
+    int numNodes = 0;
+
+    Country *curr = head;
+    while(curr->next != nullptr)
+    {
+        numNodes++;
+        curr = curr->next;
+    }
+    numNodes++; // needed to test for edge cases
+
+    if(end_index > numNodes || end_index < 0)
+    {
+        cout << "Invalid end index" << endl;
+        return;
+    }
+
+    if(!(end_index < numNodes-1))
+    {
+        cout << "Invalid end index" << endl;
+        return;
+    }
+
+    if(start_index > numNodes || start_index < 0)
+    {
+        cout << "Invalid start index" << endl;
+        return;
+    }
+
+    // assume input is well behaved now
+
+    if(start_index == 0) // need to replace head node
+    {
+        Country* startNode = getNodeAtIndex(start_index, head);
+        Country* endNode = getNodeAtIndex(end_index, head);
+        Country* lastNode = getNodeAtIndex(numNodes - 1, head);
+        Country* newHead = getNodeAtIndex(end_index + 1, head);
+
+        lastNode->next = startNode; // fix old tail pointer to point to start of section
+        endNode->next = nullptr; // fix new tail pointer to nullptr
+        head = newHead; // fix head pointer
+    } else {
+        Country* startNode = getNodeAtIndex(start_index, head);
+        Country* endNode = getNodeAtIndex(end_index, head);
+        Country* lastNode = getNodeAtIndex(numNodes - 1, head);
+        Country* prevNode = getNodeAtIndex(start_index - 1, head);
+        Country* postNode = getNodeAtIndex(end_index + 1, head);
+
+        lastNode->next = startNode; // loop end of list back to section
+        endNode->next = nullptr; // fix last node to point to nullptr
+        prevNode->next = postNode; // fix list after section removal
+    }
 }
 
 /*
