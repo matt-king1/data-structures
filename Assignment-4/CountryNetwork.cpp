@@ -152,7 +152,16 @@ Country* CountryNetwork::searchNetwork(string countryName)
 */
 Country* CountryNetwork::createLoop(string countryName)
 {
-    //TODO: Complete this function
+    if(!head) { return nullptr; }
+
+    Country* c = searchNetwork(countryName);
+    Country* curr = head;
+    while(curr->next != nullptr)
+    {
+        curr = curr->next;
+    }
+    curr->next = c;
+    return curr;
 }
 
 
@@ -196,7 +205,23 @@ void CountryNetwork::deleteEntireNetwork()
 * returns true if loop is detected. Otherwise return false.
 */
 bool CountryNetwork::detectLoop() {
-    //TODO: Complete this function
+    
+    // using Floyd's Cycle Detection Algorithm
+    // https://en.wikipedia.org/wiki/Cycle_detection#Floyd's_Tortoise_and_Hare
+    // https://www.youtube.com/watch?v=MFOAbpfrJ8g
+
+    if(!head) { return false; }
+
+    Country* slow = head;
+    Country* fast = head->next;
+
+    while(slow != nullptr && fast != nullptr && fast->next != nullptr)
+    {
+        if(slow == fast) { return true; }
+        fast = fast->next->next;
+        slow = slow->next;
+    }
+    return false;
 }
 
 /*
