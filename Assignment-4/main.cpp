@@ -6,6 +6,8 @@
 
 #include "CountryNetwork.hpp"
 // you may include more libraries as needed
+#include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -88,7 +90,7 @@ void handleUserInput(CountryNetwork& CountryNet)
                 cout << "Enter the previous country name (or First): " << endl;
                 getline(cin, prevCountryName);
 
-                while(!CountryNet.searchNetwork(prevCountryName) and prevCountryName != "First")
+                while(!CountryNet.searchNetwork(prevCountryName) && prevCountryName != "First")
                 {
                   cout << "INVALID(previous country name)...Please enter a VALID previous country name!" << endl;
                   getline(cin, prevCountryName);

@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "C:\\Users\\Matt\\Documents\\School\\data-structures"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"istream": "cpp",
+			"string": "cpp",
+			"iostream": "cpp"
+		}
+	}
+}
