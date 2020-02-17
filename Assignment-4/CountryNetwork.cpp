@@ -311,8 +311,8 @@ void CountryNetwork:: readjustNetwork(int start_index, int end_index)
 
     if(start_index == 0) // need to replace head node
     {
-        Country* startNode = getNodeAtIndex(start_index, head);
-        Country* endNode = getNodeAtIndex(end_index, head);
+        Country* startNode = getNodeAtIndex(start_index, head);     // get all the nodes
+        Country* endNode = getNodeAtIndex(end_index, head);         // before they're modified
         Country* lastNode = getNodeAtIndex(numNodes - 1, head);
         Country* newHead = getNodeAtIndex(end_index + 1, head);
 
@@ -320,9 +320,9 @@ void CountryNetwork:: readjustNetwork(int start_index, int end_index)
         endNode->next = nullptr; // fix new tail pointer to nullptr
         head = newHead; // fix head pointer
     } else {
-        Country* startNode = getNodeAtIndex(start_index, head);
-        Country* endNode = getNodeAtIndex(end_index, head);
-        Country* lastNode = getNodeAtIndex(numNodes - 1, head);
+        Country* startNode = getNodeAtIndex(start_index, head);     // get all the nodes
+        Country* endNode = getNodeAtIndex(end_index, head);         // before they're modified
+        Country* lastNode = getNodeAtIndex(numNodes - 1, head);   
         Country* prevNode = getNodeAtIndex(start_index - 1, head);
         Country* postNode = getNodeAtIndex(end_index + 1, head);
 
