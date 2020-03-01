@@ -36,7 +36,6 @@ bool isNumber(string s)
 
 int main()
 {
-  // TODO - Declare a stack to hold the operands
   string input;
 
   RPNCalculator *rpn = new RPNCalculator();
@@ -48,19 +47,12 @@ int main()
     cout << "#> ";
     getline(cin, input);
 
-    /* TODO
-       1. Read input (operators and operands) until you encounter a "="
-       2. Use the isNumber function to check if the input is an operand
-       3. push all operands to the stack
-       4. If input is not an operand, call the compute function to evaluate
-          the partial expression
-    */
     if(input == "=")
     { 
       if(rpn->isEmpty())
       {
         cout << "No operands: Nothing to evaluate" << endl;
-        return 1; // THIS COULD CAUSE AN ISSUE
+        return 0;
       }
 
       float num = (float)rpn->peek()->number;
@@ -69,13 +61,13 @@ int main()
       if(rpn->isEmpty())
       {
         cout << setprecision(4) << num << endl;
-        return 1;
+        return 0;
       } else {
         cout << "Invalid expression" << endl;
-        return 1; // THIS COULD CAUSE AN ISSUE
+        return 0;
       }
     }
-    int num;
+    float num;
 
     if(isNumber(input))
     {
@@ -92,12 +84,5 @@ int main()
     }
 
   }
-
-  /* TODO - If the stack is empty then print "No operands: Nothing to evaluate" */
-
-  /* TODO - Validate the expression
-      1. If valid then print the result
-      2. Else, print "Invalid expression"*/
-
   return 0;
 }

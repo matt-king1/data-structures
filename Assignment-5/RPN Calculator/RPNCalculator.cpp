@@ -54,7 +54,6 @@ bool RPNCalculator::compute(std::string symbol)
     }
 
     float n1 = peek()->number;
-    std::cout << "n1: " << n1 << std::endl;
     pop();
 
     if(!stackHead)
@@ -65,7 +64,6 @@ bool RPNCalculator::compute(std::string symbol)
     }
 
     float n2 = peek()->number;
-    std::cout << "n2: " << n2 << std::endl;
     pop();
 
     if(!(symbol == "+" || symbol == "*"))
@@ -77,17 +75,8 @@ bool RPNCalculator::compute(std::string symbol)
 
     if(symbol == "+")
     {
-        std::cout << "adding " << n1 << " and " << n2 << std::endl;
+        //std::cout << "adding " << n1 << " and " << n2 << std::endl;
         push((n1 + n2));
-        
-        Operand *curr = stackHead;
-
-        while(curr)
-        {
-            std::cout << curr->number << std::endl;
-            curr = curr->next;
-        }
-
         return true;
     }
 
