@@ -70,8 +70,8 @@ bool RPNCalculator::compute(std::string symbol)
 
     if(!(symbol == "+" || symbol == "*"))
     {
-        std::cout << "err: invalid operation" << std::endl;
-        std::cout << "symbol: " << symbol;
+        //std::cout << "err: invalid operation" << std::endl;
+        //std::cout << "symbol: " << symbol;
         return false;
     }
 
@@ -79,12 +79,21 @@ bool RPNCalculator::compute(std::string symbol)
     {
         std::cout << "adding " << n1 << " and " << n2 << std::endl;
         push((n1 + n2));
+        
+        Operand *curr = stackHead;
+
+        while(curr)
+        {
+            std::cout << curr->number << std::endl;
+            curr = curr->next;
+        }
+
         return true;
     }
 
     if(symbol == "*")
     {
-        std::cout << "multiplying " << n1 << " and " << n2 << std::endl;
+        //std::cout << "multiplying " << n1 << " and " << n2 << std::endl;
         push((n1 * n2));
         return true;
     }
