@@ -8,16 +8,13 @@ using namespace std;
 
 ProducerConsumer::ProducerConsumer()
 {
-    queueFront = -1;
+    queueFront = 0;
     queueEnd = 0;
 }
 
-bool ProducerConsumer::isEmpty() { return queueFront == -1; }
+bool ProducerConsumer::isEmpty() { return counter == 0; }
 
-bool ProducerConsumer::isFull() 
-{
-    return queueEnd == queueFront;
-}
+bool ProducerConsumer::isFull() { return counter == SIZE; }
 
 void ProducerConsumer::enqueue(std::string item)
 {
@@ -26,9 +23,9 @@ void ProducerConsumer::enqueue(std::string item)
         cout << "Queue full, cannot add new item" << endl;
         return;
     }
-    cout << "Adding " << item << " to queue" << endl;
     queue[queueEnd] = item;
     queueEnd = (queueEnd + 1) % SIZE;
+    counter++;
 }
 
 void ProducerConsumer::dequeue()
@@ -39,6 +36,7 @@ void ProducerConsumer::dequeue()
         return;
     }
     queueFront = (queueFront + 1) % SIZE;
+    counter--;
 }
 
 std::string ProducerConsumer::peek()
@@ -53,6 +51,9 @@ std::string ProducerConsumer::peek()
 
 int ProducerConsumer::queueSize()
 {
-    // via some guy on stackoverflow:
-    int size = queueFront > queueEnd ? (queueFront - queueEnd) : (queueFront + SIZE - queueEnd);
+    // if(isEmpty()) return 0;
+    // if(isFull()) return SIZE;
+    // int size = queueFront > queueEnd ? (SIZE - queueFront + queueEnd) : (queueEnd - queueFront);
+    // return size;
+    return counter;
 }
