@@ -28,5 +28,4 @@ public:
   int getQueueFront() { return queueFront; }
   int getQueueEnd() { return queueEnd; }
   std::string* getQueue() { return queue; }
-
 };
