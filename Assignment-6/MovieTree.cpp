@@ -3,7 +3,6 @@
 #include <string>
 #include <fstream>
 #include <sstream>
-#include <vector>
 
 using namespace std;
 // MovieNode: node struct that will be stored in the MovieTree BST
@@ -130,7 +129,6 @@ void findMovieHelper(string title, MovieNode* currNode)
   }
 }
 
-// ONLY FUNCTION LEFT TO
 void MovieTree::queryMovies(float rating, int year) {
   if(!root)
   {
@@ -146,7 +144,7 @@ void queryMoviesHelper(MovieNode* currNode, float rating, int year)
 {
   // traverse using preorder traversal
 
-  if(currNode->ranking >= rating && currNode->year > year)
+  if(currNode->rating >= rating && currNode->year > year)
   {
     cout << currNode->title << "(" << currNode->year << ") " << currNode->rating << endl;
   }
@@ -168,6 +166,12 @@ void MovieTree::averageRating() {
 
   averageRatingHelper(root, totalRating, totalMovies);
 
+  if(totalMovies == 0)
+  {
+    cout << "Average rating:0.0" << endl;
+    return;
+  }
+
   float averageRating = totalRating / totalMovies;
   
   cout << "Average rating:" << averageRating << endl;
@@ -176,6 +180,7 @@ void MovieTree::averageRating() {
 void averageRatingHelper(MovieNode* currNode, float &totalRating, float &totalMovies)
 {
   // traverse using preorder traversal
+  if(!currNode) return;
   if(currNode)
   {
     totalRating += currNode->rating;
