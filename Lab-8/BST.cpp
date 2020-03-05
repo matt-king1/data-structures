@@ -212,25 +212,30 @@ Node* BST::deleteNode(Node *currNode, int value)
     //TODO Case : No child
     if(currNode->left == NULL && currNode->right == NULL)
     {
-
+        return NULL;
     }
     //TODO Case : Only right child
     else if(currNode->left == NULL)
     {
-
+        Node* temp = currNode;
+        currNode = currNode->right;
+        delete temp;
     }
     //TODO Case : Only left child
     else if(currNode->right == NULL)
     {
-
+        Node* temp = currNode;
+        currNode = currNode->left;
+        delete temp;
     }
     //TODO Case: Both left and right child
     else
     {
       ///Replace with Minimum from right subtree
-
+      Node* temp = getMinValueNode(currNode->right);
+      currNode->key = temp->key;
+      currNode->right = deleteNode(currNode->right, temp->key);
     }
-
   }
 return currNode;
 }
