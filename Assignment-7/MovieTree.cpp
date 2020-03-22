@@ -22,7 +22,22 @@ void MovieTree::printMovieInventory()
 
 void MovieTree::addMovie(int ranking, string title, int year, float rating)
 {
+    cout << "First letter of " << title << " is: " << title[0];
+    TreeNode* letterNode = searchChar(title[0]);
 
+    if(letterNode->head == NULL)
+    {
+        letterNode->head = new LLMovieNode(ranking, title, year, rating);
+        return;
+    } else {
+        LLMovieNode* currNode = letterNode->head;
+        while(currNode->next != NULL)
+        {
+            currNode = currNode->next;
+        }
+        // currNode now points to the last LLMovieNode in the linked list associated with the first letter
+        currNode->next = new LLMovieNode(ranking, title, year, rating);//               of the movie title
+    }
 }
 
 void MovieTree::deleteMovie(std::string title)

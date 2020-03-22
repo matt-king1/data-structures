@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
 	while (getline(dataFile, dataLine))
 	{
 		int ranking, releaseYear;
-    float rating;
+    	float rating;
 		string title;
 		string datum;
 		stringstream dataStream(dataLine);
