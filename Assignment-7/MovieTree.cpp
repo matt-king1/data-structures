@@ -15,9 +15,32 @@ MovieTree::~MovieTree()
 
 }
 
+void printLL(TreeNode* r)
+{
+    LLMovieNode* currNode = r->head;
+
+    while(currNode != NULL)
+    {
+        // handle each movie
+        cout << " >> " << currNode->title << " " << currNode->rating << endl;
+        currNode = currNode->next;
+    }
+}
+
+void printMovieHelper(TreeNode* currNode)
+{
+    if(currNode == NULL) return;
+
+    printMovieHelper(currNode->leftChild);
+
+    cout << "Movies starting with letter: " << currNode->titleChar << endl;
+    printLL(currNode);
+    printMovieHelper(currNode->rightChild);
+}
+
 void MovieTree::printMovieInventory()
 {
-
+    printMovieHelper(root);
 }
 
 void MovieTree::addMovie(int ranking, string title, int year, float rating)
