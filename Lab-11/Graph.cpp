@@ -77,14 +77,25 @@ void Graph::setAllVerticesUnvisited()
 
 // DFS
 // TODO: Complete this function, so that it can be used in the isBridge function
-void Graph::DFTraversal(vertex *n)
+
+void dft(vertex *n)
 {
     n->visited = true;
 
     for (int x = 0; x < n->adj.size(); x++)
     {
-        // TODO
+        vertex* adjV = n->adj.at(x).v;
+        if(adjV->visited == false)
+        {
+            adjV->visited = true;
+            dft(adjV);
+        }
     }
+}
+
+void Graph::DFTraversal(vertex *n)
+{
+    dft(n);
 }
 
 // function to remove an edge connecting vertices with keys key1 and key2
@@ -128,6 +139,34 @@ void Graph::removeEdge(int key1, int key2)
     }
 }
 
+void DFS(vertex* start)
+{
+    if(start->visited == false)
+    {
+        start->visited = true;
+        for(int i = 0; i < start->adj.size(); i++)
+        {
+            DFS(start->adj.at(i).v);
+        }
+    }
+}
+
+int getConnectedComponents(vector<vertex*> &vertices)
+{
+    int count = 0;
+
+    for(int i = 0; i < vertices.size(); i++)
+    {
+        if(vertices.at(i)->visited == false)
+        {
+            DFS(vertices.at(i));
+            count += 1;
+        }
+    }
+
+    return count;
+}
+
 // Check if an edge connecting vertices with keys: key1 and key2 is a bridge of the graph, returns true if it is indeed a bridge otherwise false
 // TODO SILVER: Follow the TODOs to complete the funciton below
 bool Graph::isBridge(int key1, int key2)
@@ -142,6 +181,8 @@ bool Graph::isBridge(int key1, int key2)
     int initial_components = 0;
 
     // TODO Step1: Get initial_components. Complete and use the DFTraversal function.
+
+    initial_components = getConnectedComponents(vertices);
 
     cout << "num. of connected components before removal: " << initial_components << endl;
 
@@ -159,6 +200,8 @@ bool Graph::isBridge(int key1, int key2)
 
     // TODO Step 3: Get components_after_removal (use DFTraversal again)
 
+    components_after_removal = getConnectedComponents(vertices);
+
     cout << "num. of connected components after removal: " << components_after_removal << endl;
 
     // Step4: Add the edge back to the graph
@@ -166,5 +209,5 @@ bool Graph::isBridge(int key1, int key2)
 
     // TODO Step5: check if the no of connected components increases after removing the edge and return true
 
-    return false;
+    return (components_after_removal > initial_components);
 }
