@@ -73,24 +73,53 @@ void Graph::breadthFirstTraverse(string sourceVertex)
     queue<vertex*> q;
 
     vStart->visited = true;
+    vStart->distance = 0;
+
     q.push(vStart);
-    int dist = 0;
 
     while(!q.empty())
     {
-        vertex* v = q.front();
+        vertex* curr = q.front();
         q.pop();
-        dist++;
-        v->visited = true;
 
-        for(int i = 0; i < v->adj.size(); i++)
+        for(int i = 0; i < curr->adj.size(); i++)
         {
-            if(v->adj.at(i).v->visited == false)
+            if(!(curr->adj.at(i).v->visited))
             {
-                vertex* adjV = v->adj.at(i).v;
-                q.push(v->adj.at(i).v);
-                cout << v->adj.at(i).v->name << "(" << v->adj.at(i).v->distance << ") ";
+                curr->adj.at(i).v->distance = curr->distance + 1;
+                curr->adj.at(i).v->visited = true;
+
+                cout << curr->adj.at(i).v->name << "(" << curr->adj.at(i).v->distance << ") ";
+                q.push(curr->adj.at(i).v);
             }
+        } 
+    }
+}
+
+void DFS(vertex* start)
+{
+    if(start->visited == false)
+    {
+        start->visited = true;
+        for(int i = 0; i < start->adj.size(); i++)
+        {
+            DFS(start->adj.at(i).v);
         }
     }
+}
+
+int Graph::getConnectedComponents()
+{
+    int count = 0;
+
+    for(int i = 0; i < vertices.size(); i++)
+    {
+        if(vertices.at(i)->visited == false)
+        {
+            DFS(vertices.at(i));
+            count += 1;
+        }
+    }
+
+    return count;
 }
