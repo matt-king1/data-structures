@@ -38,9 +38,8 @@ void printMovieHelper(TreeNode* currNode)
     printMovieHelper(currNode->rightChild);
 }
 
-void printLL(TreeNode* r)
+void MovieTree::printMovieInventory()
 {
-<<<<<<< HEAD
     printMovieHelper(root);
 }
 
@@ -64,32 +63,10 @@ TreeNode* createNewTreeNode(TreeNode* &r, LLMovieNode* headOfLL, char titleC, Tr
         r->rightChild = createNewTreeNode(r->rightChild, headOfLL, titleC, r);
         return r;
     }
-=======
-    LLMovieNode* currNode = r->head;
-
-    while(currNode != NULL)
-    {
-        // handle each movie
-        cout << " >> " << currNode->title << " " << currNode->rating << endl;
-        currNode = currNode->next;
-    }
 }
 
-void printMovieHelper(TreeNode* currNode)
+void MovieTree::addMovie(int ranking, string title, int year, float rating)
 {
-    if(currNode == NULL) return;
-
-    printMovieHelper(currNode->leftChild);
-
-    cout << "Movies starting with letter: " << currNode->titleChar << endl;
-    printLL(currNode);
-    printMovieHelper(currNode->rightChild);
->>>>>>> fb57c2f4b4478cd6b2dca4e13cb5f36d4a9cd3f8
-}
-
-void MovieTree::printMovieInventory()
-{
-<<<<<<< HEAD
     if(title.empty())
     {
         cout << "Empty string" << endl;
@@ -189,29 +166,6 @@ TreeNode *deleteNodeHelper(TreeNode *currNode, char letter)
     }
 
     return currNode;
-=======
-    printMovieHelper(root);
-}
-
-void MovieTree::addMovie(int ranking, string title, int year, float rating)
-{
-    cout << "First letter of " << title << " is: " << title[0];
-    TreeNode* letterNode = searchChar(title[0]);
-
-    if(letterNode->head == NULL)
-    {
-        letterNode->head = new LLMovieNode(ranking, title, year, rating);
-        return;
-    } else {
-        LLMovieNode* currNode = letterNode->head;
-        while(currNode->next != NULL)
-        {
-            currNode = currNode->next;
-        }
-        // currNode now points to the last LLMovieNode in the linked list associated with the first letter
-        currNode->next = new LLMovieNode(ranking, title, year, rating);//               of the movie title
-    }
->>>>>>> fb57c2f4b4478cd6b2dca4e13cb5f36d4a9cd3f8
 }
 
 void MovieTree::deleteMovie(std::string title)
