@@ -172,6 +172,7 @@ void Graph::dijkstraTraverse(string start)
                     if (distance < min)
                     {
                         v = s->adj[j].v;
+                        v->distance = distance;
                         min = distance;
                     }
                     allSolved = false;
@@ -232,9 +233,6 @@ void Graph::shortestPath(string start, string end)
                         minVisited = vis;
                         minUnvisited = vert;
                     }
-                } else if (vert->distance + vert->adj[j].weight < vis->distance)
-                {
-                    vis->distance = vert->distance + vert->adj[j].weight;
                 }
             }
         }
