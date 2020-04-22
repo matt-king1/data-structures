@@ -25,23 +25,55 @@ int main()
     g.addEdge(3, 5);
     g.addEdge(4, 5);
 
+    g.fun()? cout << "True" << endl:cout << "False" << endl;
+
+    Graph g1;
+    g1.addVertex(0);
+    g1.addVertex(1);
+    g1.addVertex(2);
+    g1.addVertex(3);
+    g1.addVertex(4);
+
+    g1.addEdge(0, 1);
+    g1.addEdge(1, 2);
+    g1.addEdge(1, 3);
+    g1.addEdge(2, 4);
+
+    g1.fun()? cout << "True" << endl:cout << "False" << endl;
+
+    Graph g2;
+    g2.addVertex(0);
+    g2.addVertex(1);
+    g2.addVertex(2);
+    g2.addVertex(3);
+    g2.addVertex(4);
+
+    g2.addEdge(0, 1);
+    g2.addEdge(0, 2);
+    g2.addEdge(0, 3);
+    g2.addEdge(1, 2);
+    g2.addEdge(1, 3);
+
+    g2.fun()? cout << "True" << endl:cout << "False" << endl;
+
+
     // TODO SILVER: Complete the function isbridge() in Graph.cpp,
     // this function takes an edge (key1, key2) where key1 and key2 are keys of the two end points of the edge and finds if it is a bridge.
     // A bridge is an edge of a graph whose deletion increases its number of connected components.
-    bool isBridge = g.isBridge(6,1);
+  //   bool isBridge = g.isBridge(6,1);
 
-    if (isBridge)
-      cout<< "The edge connecting vertices with keys 1 and 6 is a bridge!" << endl; //Expected
-    else
-     cout<<"The edge connecting vertices with keys 1 and 6 is not a bridge!" << endl;
+  //   if (isBridge)
+  //     cout<< "The edge connecting vertices with keys 1 and 6 is a bridge!" << endl; //Expected
+  //   else
+  //    cout<<"The edge connecting vertices with keys 1 and 6 is not a bridge!" << endl;
 
 
-   isBridge = g.isBridge(0,2);
+  //  isBridge = g.isBridge(0,2);
 
-   if (isBridge)
-     cout<< "The edge connecting vertices with keys 0 and 2 is a bridge!" << endl;
-   else
-    cout<<"The edge connecting vertices with keys 0 and 2 is not a bridge!" << endl; //Expected
+  //  if (isBridge)
+  //    cout<< "The edge connecting vertices with keys 0 and 2 is a bridge!" << endl;
+  //  else
+  //   cout<<"The edge connecting vertices with keys 0 and 2 is not a bridge!" << endl; //Expected
 
-    return 0;
+  //   return 0;
 }

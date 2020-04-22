@@ -211,3 +211,37 @@ bool Graph::isBridge(int key1, int key2)
 
     return (components_after_removal > initial_components);
 }
+
+
+bool recursivecheck(vertex* n, vertex* p)
+{
+    n->visited = true;
+    for(int i = 0; i < n->adj.size(); i++)
+    {
+        if(!n->adj[i].v->visited)
+        {
+            if(recursivecheck(n->adj[i].v, n))
+                return true;
+        }
+        else if(n->adj[i].v != p)
+            return true;
+    }
+    return false;
+}
+
+
+bool Graph::fun()
+{
+    for(int i = 0; i < vertices.size(); i++)
+    {
+        if(!vertices[i]->visited)
+        {
+            if(recursivecheck(vertices[i], NULL))
+            {
+                return true;
+            }
+        }
+    }
+    return false;
+
+}

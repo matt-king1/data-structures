@@ -27,6 +27,9 @@ class Graph
         void setAllVerticesUnvisited();
         void printGraph();
 
+        // temp
+        bool fun();
+
 
     private:
         std::vector<vertex*> vertices;
