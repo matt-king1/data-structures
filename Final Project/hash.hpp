@@ -18,7 +18,7 @@ class HashTable
 
     // Pointer to an array containing buckets
     node* *table;
-    int numOfcolision =0;
+    int numOfcolision = 0;
     node* createNode(int key, node* next);
 public:
     HashTable(int bsize);  // Constructor
