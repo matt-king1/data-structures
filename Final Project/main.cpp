@@ -4,27 +4,28 @@
 #include <vector>
 #include <chrono>
 
-
-// DEBUG SWITCHES
-#define INSERT 1
-#define SEARCH 0
-
-const vector<string> split(const string& s, const char& c)
+const vector<string> split(const string &s, const char &c)
 {
-	string buff{""};
-	vector<string> v;
-	
-	for(auto n:s)
-	{
-		if(n != c) buff+=n; else
-		if(n == c && buff != "") { v.push_back(buff); buff = ""; }
-	}
-	if(buff != "") v.push_back(buff);
-	
-	return v;
+    string buff{""};
+    vector<string> v;
+
+    for (auto n : s)
+    {
+        if (n != c)
+            buff += n;
+        else if (n == c && buff != "")
+        {
+            v.push_back(buff);
+            buff = "";
+        }
+    }
+    if (buff != "")
+        v.push_back(buff);
+
+    return v;
 }
 
-int main(int argc, char** argv)
+int main(int argc, char **argv)
 {
     // TODO: Need to repeat tests with dataSetB
     int testDataA[40000];
@@ -40,42 +41,81 @@ int main(int argc, char** argv)
     vector<string> stringVector = split(dataS, ',');
     vector<int> intVector;
 
-    for(int i = 0; i < 40000; i++)
+    for (int i = 0; i < 40000; i++)
     {
         testDataA[i] = stoi(stringVector.at(i));
     }
 
-    #if INSERT
-    /* *********************************************************************************************** \
-    \                                            Insert:                                              */
-    LinkedList insertLL;
-    auto start = std::chrono::steady_clock::now();
-    for(int i = 0; i < 100; i++)
-    {
-        insertLL.insert(testDataA[i]);
-    }
-    auto end = std::chrono::steady_clock::now();
-    auto time = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-    cout << "Average time to insert into Linked List: " << time.count() / 100.0 << " microseconds" << endl;
+    // /* *********************************************************************************************** \
+    // \                                            Insert:                                              */
+    // LinkedList LL;
+    // auto start = std::chrono::steady_clock::now();
+    // for (int i = 0; i < 100; i++)
+    // {
+    //     LL.insert(testDataA[i]);
+    // }
+    // auto end = std::chrono::steady_clock::now();
+    // auto time = std::chrono::duration_cast<std::chrono::microseconds>(end - start); // time currently stores the time to insert 100 elements
+    // cout << "Average time to insert an element in LL: " << time.count() / 100.0 << " microseconds" << endl;
+    // insert[0] = time.count() / 100.0;
 
-    #endif
+    // /* *********************************************************************************************** \
+    // \                                            Search:                                              */
 
-    #if SEARCH
-    /* *********************************************************************************************** \
-    \                                            Search:                                              */
+    // int random[100];
+    // for (int i = 0; i < 100; i++)
+    // {
+    //     // populate random[] with random numbers in [0, 99]
+    //     random[i] = rand() % 100;
+    // }
 
-    LinkedList searchLL;
+    // start = std::chrono::steady_clock::now();
+    // for (int i = 0; i < 100; i++)
+    // {
+    //     Node *t = LL.search(testDataA[random[i]]);
+    // }
+    // end = std::chrono::steady_clock::now();
+    // time = std::chrono::duration_cast<std::chrono::microseconds>(end - start); // time currently stores the time to search 100 elements
+    // cout << "Average time to search an element in LL: " << time.count() / 100.0 << " microseconds" << endl;
+    // search[0] = time.count() / 100.0;
+
+    LinkedList LL;
     int random[100];
-    for(int i = 0; i < 100; i++)
+    for (int delta = 0; delta < 400; delta++)
     {
-        // populate random[] with random numbers in [0, 99]
-        random[i] = rand() % 100;
+        auto start = std::chrono::steady_clock::now();
+        for (int i = delta*100; i < delta*100+100; i++)
+        {
+            LL.insert(testDataA[i]);
+        }
+        auto end = std::chrono::steady_clock::now();
+        auto time = std::chrono::duration_cast<std::chrono::microseconds>(end - start); // time currently stores the time to insert 100 elements
+        cout << "Average time to insert an element in LL: " << time.count() / 100.0 << " microseconds" << endl;
+        insert[delta] = time.count() / 100.0;
+
+        for (int i = 0; i < 100; i++)
+        {
+            random[i] = rand() % (100 * (delta+1));
+        }
+
+        start = std::chrono::steady_clock::now();
+        for (int i = 0; i < 100; i++)
+        {
+            Node *t = LL.search(testDataA[random[i]]);
+        }
+        end = std::chrono::steady_clock::now();
+        time = std::chrono::duration_cast<std::chrono::microseconds>(end - start); // time currently stores the time to search 100 elements
+        cout << "Average time to search an element in LL: " << time.count() / 100.0 << " microseconds" << endl;
+        search[delta] = time.count() / 100.0;
     }
 
-    cout << "Search for: " << intVector.at(random[0]) << endl;
-    Node* t = searchLL.search(intVector.at(random[0]));
-    //cout << t->key << endl;
-
-
-    #endif
+    for(int i = 0; i < 400; i++)
+    {
+        cout << search[i] << endl;
+    }
+    cout << "=======================" << endl;
+    for(int i = 0; i < 400; i++)
+    {
+        cout << insert[i] << endl;
+    }
 }
