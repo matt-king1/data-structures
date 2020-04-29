@@ -6,8 +6,8 @@
 
 
 // DEBUG SWITCHES
-#define INSERT 0
-#define SEARCH 1
+#define INSERT 1
+#define SEARCH 0
 
 const vector<string> split(const string& s, const char& c)
 {
@@ -40,27 +40,25 @@ int main(int argc, char** argv)
     vector<string> stringVector = split(dataS, ',');
     vector<int> intVector;
 
-    for(int i = 0; i < 100; i++)
+    for(int i = 0; i < 40000; i++)
     {
-        intVector.push_back(stoi(stringVector.at(i)));
+        testDataA[i] = stoi(stringVector.at(i));
     }
-    // intVector now hold the first 100 integers in datasetA.csv
-
 
     #if INSERT
     /* *********************************************************************************************** \
     \                                            Insert:                                              */
     LinkedList insertLL;
-    std::chrono::high_resolution_clock::time_point start = std::chrono::high_resolution_clock::now();
+    auto start = std::chrono::steady_clock::now();
     for(int i = 0; i < 100; i++)
     {
-        insertLL.insert(intVector[i]);
+        insertLL.insert(testDataA[i]);
     }
-    std::chrono::high_resolution_clock::time_point end = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double> execTime = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-    std::cout << "\nAverage time to insert item in LL: " << execTime.count() / 100.0 << " seconds." <<  std::endl << std::endl;
-    #endif
+    auto end = std::chrono::steady_clock::now();
+    auto time = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+    cout << "Average time to insert into Linked List: " << time.count() / 100.0 << " microseconds" << endl;
 
+    #endif
 
     #if SEARCH
     /* *********************************************************************************************** \
