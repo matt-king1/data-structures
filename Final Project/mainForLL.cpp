@@ -90,7 +90,7 @@ int main(int argc, char **argv)
         }
         auto end = std::chrono::steady_clock::now();
         auto time = std::chrono::duration_cast<std::chrono::microseconds>(end - start); // time currently stores the time to insert 100 elements
-        cout << "Average time to insert an element in LL: " << time.count() / 100.0 << " microseconds" << endl;
+        // cout << "Average time to insert an element in LL: " << time.count() / 100.0 << " microseconds" << endl;
         insert[delta] = time.count() / 100.0;
 
         for (int i = 0; i < 100; i++)
@@ -105,7 +105,7 @@ int main(int argc, char **argv)
         }
         end = std::chrono::steady_clock::now();
         time = std::chrono::duration_cast<std::chrono::microseconds>(end - start); // time currently stores the time to search 100 elements
-        cout << "Average time to search an element in LL: " << time.count() / 100.0 << " microseconds" << endl;
+        // cout << "Average time to search an element in LL: " << time.count() / 100.0 << " microseconds" << endl;
         search[delta] = time.count() / 100.0;
     }
 
