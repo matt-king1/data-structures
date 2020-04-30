@@ -4,6 +4,11 @@
 #include <string>
 #include <iostream>
 
+//
+//  Author: Matt King
+//  CSCI 2270 Final Project
+//
+
 struct Node
 {
     int key;

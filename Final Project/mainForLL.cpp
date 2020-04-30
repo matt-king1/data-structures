@@ -4,6 +4,11 @@
 #include <vector>
 #include <chrono>
 
+//
+//  Author: Matt King
+//  CSCI 2270 Final Project
+//
+
 const vector<string> split(const string &s, const char &c)
 {
     string buff{""};
@@ -27,61 +32,26 @@ const vector<string> split(const string &s, const char &c)
 
 int main(int argc, char **argv)
 {
-    // TODO: Need to repeat tests with dataSetB
-    int testDataA[40000];
-    float insert[400];
-    float search[400];
+    int testDataA[40000];   // storage for data read from a testData file
+    float insert[400];      // storage for average insertion times
+    float search[400];      // storage for average search times
 
     string dataSetAFilename = argv[1];
     ifstream dataAFile(dataSetAFilename);
     string dataS;
 
-    getline(dataAFile, dataS); // dataS now holds the entire contents of dataSetA.csv
+    getline(dataAFile, dataS); // dataS now holds the entire contents of testData.csv
 
-    vector<string> stringVector = split(dataS, ',');
-    vector<int> intVector;
+    vector<string> stringVector = split(dataS, ','); // split the csv into strings
 
     for (int i = 0; i < 40000; i++)
     {
-        testDataA[i] = stoi(stringVector.at(i));
+        testDataA[i] = stoi(stringVector.at(i)); // parse int from string
     }
 
-    // /* *********************************************************************************************** \
-    // \                                            Insert:                                              */
-    // LinkedList LL;
-    // auto start = std::chrono::steady_clock::now();
-    // for (int i = 0; i < 100; i++)
-    // {
-    //     LL.insert(testDataA[i]);
-    // }
-    // auto end = std::chrono::steady_clock::now();
-    // auto time = std::chrono::duration_cast<std::chrono::microseconds>(end - start); // time currently stores the time to insert 100 elements
-    // cout << "Average time to insert an element in LL: " << time.count() / 100.0 << " microseconds" << endl;
-    // insert[0] = time.count() / 100.0;
-
-    // /* *********************************************************************************************** \
-    // \                                            Search:                                              */
-
-    // int random[100];
-    // for (int i = 0; i < 100; i++)
-    // {
-    //     // populate random[] with random numbers in [0, 99]
-    //     random[i] = rand() % 100;
-    // }
-
-    // start = std::chrono::steady_clock::now();
-    // for (int i = 0; i < 100; i++)
-    // {
-    //     Node *t = LL.search(testDataA[random[i]]);
-    // }
-    // end = std::chrono::steady_clock::now();
-    // time = std::chrono::duration_cast<std::chrono::microseconds>(end - start); // time currently stores the time to search 100 elements
-    // cout << "Average time to search an element in LL: " << time.count() / 100.0 << " microseconds" << endl;
-    // search[0] = time.count() / 100.0;
-
-    LinkedList LL;
-    int random[100];
-    for (int delta = 0; delta < 400; delta++)
+    LinkedList LL; // data structure to test
+    int random[100]; // array to hold random indices
+    for (int delta = 0; delta < 400; delta++) // loop through 400 delta
     {
         auto start = std::chrono::steady_clock::now();
         for (int i = delta*100; i < delta*100+100; i++)
@@ -95,13 +65,13 @@ int main(int argc, char **argv)
 
         for (int i = 0; i < 100; i++)
         {
-            random[i] = rand() % (100 * (delta+1));
+            random[i] = rand() % (100 * (delta+1)); // populate the random array with indices in [0, 99 + (100*delta)]
         }
 
         start = std::chrono::steady_clock::now();
         for (int i = 0; i < 100; i++)
         {
-            Node *t = LL.search(testDataA[random[i]]);
+            Node *t = LL.search(testDataA[random[i]]); // search for elements guaranteed to be in the LL
         }
         end = std::chrono::steady_clock::now();
         time = std::chrono::duration_cast<std::chrono::microseconds>(end - start); // time currently stores the time to search 100 elements
@@ -109,13 +79,18 @@ int main(int argc, char **argv)
         search[delta] = time.count() / 100.0;
     }
 
+    ofstream outFile;
+    string outputFilename = "insert_search_performance_linked_list_" + dataSetAFilename; // insert_search_performance_linked_list_dataSetA.csv
+    outFile.open(outputFilename);
+    outFile << "SEARCH TIMES: " << endl;
     for(int i = 0; i < 400; i++)
     {
-        cout << search[i] << endl;
+        outFile << search[i] << endl;
     }
-    cout << "=======================" << endl;
+    outFile << "==================================" << endl; // format output
+    outFile << "INSERT TIMES: " << endl;
     for(int i = 0; i < 400; i++)
     {
-        cout << insert[i] << endl;
+        outFile << insert[i] << endl;
     }
 }

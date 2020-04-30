@@ -1,6 +1,10 @@
 #include "BST.hpp"
 #include <iostream>
 
+//
+//  Author: Matt King
+//  CSCI 2270 Final Project
+//
 
 Node* createNode(int data)
 {
