@@ -4,6 +4,7 @@
 //
 //  Author: Matt King
 //  CSCI 2270 Final Project
+//  Contribution: Wrote headers, implementations, drivers, and created figures for BST and LL. Also did writeup.
 //
 
 Node* createNode(int data)

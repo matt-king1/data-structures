@@ -1,4 +1,3 @@
-#include "hash.hpp"
 #include "LL.hpp"
 #include <fstream>
 #include <vector>
@@ -7,8 +6,10 @@
 //
 //  Author: Matt King
 //  CSCI 2270 Final Project
+//  Contribution: Wrote headers, implementations, drivers, and created figures for BST and LL. Also did writeup.
 //
 
+using namespace std;
 const vector<string> split(const string &s, const char &c)
 {
     string buff{""};

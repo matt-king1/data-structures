@@ -4,6 +4,12 @@
 #include <string>
 #include <iostream>
 
+//
+//  Author: Matt King
+//  CSCI 2270 Final Project
+//  Contribution: Wrote headers, implementations, drivers, and created figures for BST and LL. Also did writeup.
+//
+
 struct Node
 {
     unsigned int key;
